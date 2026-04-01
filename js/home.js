@@ -9,8 +9,18 @@ onAuthStateChanged(auth, async (user) => {
     } else {
         try {
             const userDoc = await getDoc(doc(db, "users", user.uid));
+            const userData = userDoc.data();
+
             // Actualizar nombre del usuario
-            document.getElementById('user-name').innerText = userDoc.data()?.nombre || "Atleta";
+            document.getElementById('user-name').innerText = userData?.nombre || "Atleta";
+
+            // --- NUEVO: VALIDACIÓN DE ADMIN ---
+            const adminSection = document.getElementById('admin-section');
+            if (adminSection && userData?.rol === 'admin') {
+                adminSection.style.display = 'block'; // Mostramos el panel solo si es admin
+                console.log("Acceso de Administrador concedido.");
+            }
+
             // Renderizar calendario
             renderCalendar(user.uid);
         } catch (error) {

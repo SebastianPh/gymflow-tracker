@@ -6,6 +6,25 @@
     <title>GymFlow | Inicio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+    <style>
+        /* Estilo rápido para que el panel de admin se vea profesional */
+        .admin-panel {
+            display: none; /* Se activa desde el JS solo para ti */
+            background: #f0f4f8;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .admin-badge {
+            background: #007bff;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -14,6 +33,12 @@
     </nav>
 
     <main class="container">
+        <section id="admin-section" class="admin-panel">
+            <h3><span class="admin-badge">Admin</span> Panel de Control</h3>
+            <p>Gestiona usuarios y rutinas globales.</p>
+            <button onclick="window.location.href='admin-users.html'" class="btn-primary">Ver Usuarios</button>
+        </section>
+
         <section class="welcome-section">
             <h2>Hola, <span id="user-name">Atleta</span> 👋</h2>
             <div class="streak-card">

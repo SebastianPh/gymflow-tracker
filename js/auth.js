@@ -6,6 +6,9 @@ const authForm = document.getElementById('auth-form');
 const toggleBtn = document.getElementById('toggle-auth');
 const registerFields = document.getElementById('register-fields');
 
+// Tu correo de administrador para que el sistema sepa quién manda
+const ADMIN_EMAIL = "sebastiaphsistemas@gmail.com"; 
+
 onAuthStateChanged(auth, (user) => {
     if (user) window.location.href = 'home.html';
 });
@@ -26,9 +29,23 @@ authForm.onsubmit = async (e) => {
         if (isReg) {
             const name = document.getElementById('display-name').value;
             const res = await createUserWithEmailAndPassword(auth, email, pass);
-            await setDoc(doc(db, "users", res.user.uid), { nombre: name, planMaster: [] });
+            
+            // Lógica de Rol: Si el correo coincide con el tuyo, eres admin, si no, eres user.
+            const userRole = (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) ? "admin" : "user";
+
+            // Guardamos el perfil con el nuevo campo 'rol'
+            await setDoc(doc(db, "users", res.user.uid), { 
+                nombre: name, 
+                email: email, // Guardamos el email para facilitar consultas
+                rol: userRole, 
+                planMaster: [] 
+            });
+            
+            console.log(`Usuario creado con éxito. Rol asignado: ${userRole}`);
         } else {
             await signInWithEmailAndPassword(auth, email, pass);
         }
-    } catch (err) { alert("Error: " + err.message); }
+    } catch (err) { 
+        alert("Error: " + err.message); 
+    }
 };
