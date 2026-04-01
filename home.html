@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow | Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">Gym<span>Flow</span></div>
+        <button id="logout-btn" class="btn-logout-icon">Logout</button>
+    </nav>
+
+    <main class="container">
+        <section class="welcome-section">
+            <h2>Hola, <span id="user-name">Atleta</span> 👋</h2>
+            <div class="streak-card">
+                <p>🔥 Racha: <strong id="user-streak">0</strong> días entrenados</p>
+            </div>
+        </section>
+
+        <section class="calendar-section">
+            <h3>Registro Mensual</h3>
+            <div id="monthly-calendar" class="calendar-grid"></div>
+        </section>
+    </main>
+
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item active">Inicio</a>
+        <a href="config.html" class="nav-item">Configurar</a>
+        <a href="train.html" class="nav-item">Entrenar</a>
+        <a href="progress.html" class="nav-item">Progreso</a>
+    </div>
+    <script src="js/home.js" type="module"></script>
+</body>
+</html>

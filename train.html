@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow | Entrenar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <main class="container page-margin">
+        <div id="pre-train-ui">
+            <h2 id="routine-title">Cargando...</h2>
+            <p id="routine-date"></p>
+            <button id="btn-start" class="btn-primary">INICIAR RUTINA</button>
+        </div>
+
+        <div id="active-train-ui" class="hidden">
+            <div class="timer-float">
+                <span id="cronometro">00:00:00</span>
+            </div>
+            <div id="workout-list"></div>
+            <button id="btn-finish" class="btn-danger">FINALIZAR SESIÓN</button>
+        </div>
+    </main>
+
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">Inicio</a>
+        <a href="config.html" class="nav-item">Configurar</a>
+        <a href="train.html" class="nav-item active">Entrenar</a>
+        <a href="progress.html" class="nav-item">Progreso</a>
+    </div>
+    <script src="js/train.js" type="module"></script>
+</body>
+</html>

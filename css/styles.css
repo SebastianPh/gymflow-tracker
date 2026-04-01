@@ -1,0 +1,224 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES
+   ========================================================================== */
+:root {
+    --primary: #00ff88;       /* Verde Neón */
+    --primary-hover: #00cc6e;
+    --bg-dark: #0f172a;       /* Fondo Principal */
+    --card-bg: #1e293b;       /* Fondo Tarjetas */
+    --text-main: #f8fafc;     /* Blanco */
+    --text-muted: #94a3b8;    /* Gris */
+    --radius: 12px;
+    --transition: 0.3s ease;
+}
+
+/* ==========================================================================
+   2. RESET Y BASE (Importante: Cambiamos el Flex del Body)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* Eliminamos el centrado total para que el contenido fluya hacia abajo */
+}
+
+/* ==========================================================================
+   3. NAVEGACIÓN SUPERIOR (Sticky Header)
+   ========================================================================== */
+#main-nav {
+    background: var(--card-bg);
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid #334155;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.nav-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.nav-logo span { color: var(--primary); }
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-link-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.nav-link-btn.active, .nav-link-btn:hover {
+    color: var(--primary);
+    background: rgba(0, 255, 136, 0.1);
+}
+
+/* ==========================================================================
+   4. CONTENEDOR DE VISTAS (Centrado del contenido)
+   ========================================================================== */
+#view-manager {
+    margin: center;
+    max-width: 600px; /* Tamaño ideal tipo app móvil */
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* --- Tarjetas (Común para Auth y Lobby) --- */
+.auth-card, .home-section-card {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   5. DISEÑO DEL LOBBY (HOME VIEW)
+   ========================================================================== */
+.welcome-banner {
+    margin-bottom: 2rem;
+}
+
+.welcome-banner h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.welcome-banner p {
+    color: var(--text-muted);
+}
+
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna para que no se amontone */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid #334155;
+    text-align: center;
+}
+
+.stat-val {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* --- CALENDARIO SEMANAL --- */
+.calendar-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid #334155;
+}
+
+.week-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 1.2rem;
+}
+
+.day-box {
+    background: #0f172a;
+    padding: 10px 5px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #334155;
+}
+
+.day-box.active-day {
+    border-color: var(--primary);
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.day-name { font-size: 0.65rem; color: var(--text-muted); display: block; text-transform: uppercase; }
+.day-num { font-size: 1rem; font-weight: 700; color: #fff; }
+
+/* ==========================================================================
+   6. FORMULARIOS Y BOTONES (Auth)
+   ========================================================================== */
+.input-group { margin-bottom: 1.2rem; }
+.input-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
+.input-group input, select {
+    width: 100%;
+    padding: 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: white;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* Utilidades */
+.hidden { display: none !important; }
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columnas para los 7 días de la semana */
+    gap: 10px;
+    margin-top: 15px;
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.calendar-day {
+    aspect-ratio: 1 / 1; /* Hace que los cuadritos sean cuadrados */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: white;
+}

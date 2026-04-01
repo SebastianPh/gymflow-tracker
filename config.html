@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow | Configurar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <main class="container page-margin">
+        <div class="header-page">
+            <h2>Mi Plan Maestro</h2>
+            <p>Configura tus días y ejercicios.</p>
+        </div>
+
+        <div class="setup-group">
+            <label>¿Cuántos días a la semana entrenas?</label>
+            <select id="days-count">
+                <option value="0">Seleccionar...</option>
+                <option value="1">1 Día</option><option value="2">2 Días</option>
+                <option value="3">3 Días</option><option value="4">4 Días</option>
+                <option value="5">5 Días</option><option value="6">6 Días</option>
+                <option value="7">7 Días</option>
+            </select>
+        </div>
+
+        <div id="config-list" class="config-cards-container">
+            </div>
+
+        <button id="save-plan-btn" class="btn-primary hidden">Guardar Plan Maestro</button>
+    </main>
+
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item">Inicio</a>
+        <a href="config.html" class="nav-item active">Configurar</a>
+        <a href="train.html" class="nav-item">Entrenar</a>
+        <a href="progress.html" class="nav-item">Progreso</a>
+    </div>
+    <script src="js/config.js" type="module"></script>
+</body>
+</html>

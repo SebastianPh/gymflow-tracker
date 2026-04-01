@@ -1,0 +1,212 @@
+:root {
+    --bg: #0b0f1a;
+    --card: #161b2c;
+    --primary: #10b981;
+    --danger: #ef4444;
+    --text: #f8fafc;
+    --nav-height: 70px;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding-bottom: var(--nav-height); /* Espacio para la nav inferior */
+}
+
+.container {
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* NAVBAR SUPERIOR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--card);
+    border-bottom: 1px solid #2d3748;
+}
+
+.nav-logo { font-weight: 800; font-size: 1.5rem; }
+.nav-logo span { color: var(--primary); }
+
+.btn-logout-icon {
+    background: #ef444422;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* CALENDARIO */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    border: 1px solid #2d3748;
+}
+
+.calendar-day.done { border-color: var(--primary); }
+
+/* TARJETAS DE CONFIG Y ENTRENAMIENTO */
+.config-card, .exercise-card {
+    background: var(--card);
+    padding: 1.2rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #2d3748;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 0.5rem;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+/* TABLA DE PROGRESO */
+.table-container {
+    overflow-x: auto;
+    background: var(--card);
+    border-radius: 1rem;
+    border: 1px solid #2d3748;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+th { background: #1e293b; padding: 1rem; text-align: left; color: var(--primary); }
+td { padding: 1rem; border-bottom: 1px solid #2d3748; vertical-align: top; }
+
+/* NAVBAR INFERIOR (Mobile First) */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: var(--card);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #2d3748;
+    z-index: 1000;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-item.active { color: var(--primary); }
+
+/* BOTONES */
+.btn-primary { background: var(--primary); color: var(--bg); font-weight: 700; border: none; padding: 1rem; border-radius: 0.8rem; width: 100%; cursor: pointer; }
+.btn-danger { background: var(--danger); color: white; font-weight: 700; border: none; padding: 1rem; border-radius: 0.8rem; width: 100%; cursor: pointer; }
+
+.hidden { display: none; }
+
+/* Contenedor de la Tabla */
+.table-container {
+    background: var(--card);
+    border-radius: 1.2rem;
+    overflow: hidden;
+    border: 1px solid #2d3748;
+    margin-top: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text);
+}
+
+th {
+    background: #1e293b;
+    padding: 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary);
+    text-align: left;
+}
+
+td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid #2d3748;
+    vertical-align: top;
+}
+
+/* Estilos de Columnas */
+.date-badge {
+    background: #1e293b;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    border: 1px solid #334155;
+}
+
+.time-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+/* Desglose de Ejercicios */
+.exercise-row {
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid var(--primary);
+    padding-left: 0.8rem;
+}
+
+.ex-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #f8fafc;
+}
+
+.ex-series {
+    font-size: 0.8rem;
+    color: #10b981;
+    font-family: 'Courier New', Courier, monospace; /* Estilo técnico para reps */
+    margin-top: 2px;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 480px) {
+    th { font-size: 0.7rem; padding: 0.8rem 0.5rem; }
+    td { padding: 1rem 0.5rem; }
+    .date-badge { font-size: 0.75rem; }
+}
