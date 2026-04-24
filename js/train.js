@@ -7,7 +7,7 @@ let timerInterval;
 let todayRoutine = null;
 let userUid = null;
 
-// --- 1. BLOQUE DE VERIFICACIÓN INICIAL (LA CLAVE DEL CAMBIO) ---
+// --- 1. VERIFICACIÓN INICIAL ---
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
         window.location.href = 'index.html';
@@ -15,16 +15,12 @@ onAuthStateChanged(auth, async (user) => {
     }
     userUid = user.uid;
 
-    // A. Generamos la fecha manual de HOY (estándar D/M/AAAA)
     const d = new Date();
     const fechaHoyManual = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-    
-    // B. Obtenemos el contenedor pre-entrenamiento
     const preTrainUI = document.getElementById('pre-train-ui');
     const titleEl = document.getElementById('routine-title');
     const btnStart = document.getElementById('btn-start');
 
-    // C. CONSULTA CRÍTICA: ¿Ya entrenó hoy?
     const q = query(
         collection(db, "entrenamientos"), 
         where("uid", "==", userUid), 
@@ -33,30 +29,24 @@ onAuthStateChanged(auth, async (user) => {
     
     try {
         const snap = await getDocs(q);
-
-        // SI YA EXISTE UN REGISTRO DE HOY: Mostramos el mensaje de descanso
         if (!snap.empty) {
             titleEl.innerHTML = `
                 <div style="text-align: center; color: #10b981;">
                     <span style="font-size: 3rem;">✅</span><br>
                     <strong>¡Entrenamiento Completado!</strong><br>
                     <span style="font-size: 1rem; color: #94a3b8; font-weight: 400;">
-                        Buen trabajo hoy, Sebastian. A descansar para tu próximo entrenamiento.
+                        Buen trabajo hoy, Sebastian. A descansar.
                     </span>
                 </div>
             `;
-            btnStart.classList.add('hidden'); // Ocultamos el botón para que no vuelva a entrenar
-            document.getElementById('routine-date').classList.add('hidden'); // Ocultamos la fecha opcional
-            return; // Detenemos la ejecución aquí, no cargamos rutina
+            btnStart.classList.add('hidden');
+            return;
         }
 
-        // SI NO HA ENTRENADO: Procedemos a cargar la rutina del día
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const plan = userDoc.data()?.planMaster || [];
-        
         const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
         const dayName = diasSemana[new Date().getDay()];
-        
         todayRoutine = plan.find(p => p.dayName === dayName);
 
         if (todayRoutine) {
@@ -66,20 +56,18 @@ onAuthStateChanged(auth, async (user) => {
             titleEl.innerText = "Día de Descanso";
             btnStart.classList.add('hidden');
         }
-
     } catch (error) {
-        console.error("Error en la verificación de entrenamiento:", error);
+        console.error("Error:", error);
     }
 });
 
-// --- 2. INICIAR ENTRENAMIENTO ACTIVO (SIN CAMBIOS) ---
+// --- 2. RENDERIZADO PRO ---
 document.getElementById('btn-start').onclick = () => {
     if (!todayRoutine) return;
 
     document.getElementById('pre-train-ui').classList.add('hidden');
     document.getElementById('active-train-ui').classList.remove('hidden');
     
-    // Iniciar Cronómetro
     startTime = new Date();
     timerInterval = setInterval(() => {
         const diff = Math.floor((new Date() - startTime) / 1000);
@@ -89,37 +77,71 @@ document.getElementById('btn-start').onclick = () => {
         document.getElementById('cronometro').innerText = `${hrs}:${mins}:${secs}`;
     }, 1000);
 
-    // Renderizar Ejercicios
     const list = document.getElementById('workout-list');
     list.innerHTML = ''; 
     
     todayRoutine.exercises.forEach((ex, i) => {
         const div = document.createElement('div');
-        div.className = 'exercise-card';
+        div.className = 'exercise-card pro-card';
+        div.id = `card-${i}`;
         div.innerHTML = `
-            <h4>${ex}</h4>
-            <div id="sets-${i}">
-                <div class="set-row">
-                    <input type="number" class="r" placeholder="Reps">
-                    <input type="number" class="w" placeholder="Kg">
-                </div>
+            <div class="card-header">
+                <h4>${ex}</h4>
+                <span class="status-badge" id="badge-${i}">En curso</span>
             </div>
-            <button type="button" class="btn-add-set" onclick="window.addSetField(${i})">+ Serie</button>
+            <div id="sets-${i}" class="sets-container">
+                </div>
+            <div class="card-actions" id="actions-${i}">
+                <button type="button" class="btn-pro-add" onclick="window.addSetField(${i})">+ Añadir Serie</button>
+                <button type="button" class="btn-pro-check" onclick="window.finishExercise(${i})">Finalizar Ejercicio</button>
+            </div>
         `;
         list.appendChild(div);
+        window.addSetField(i); // Genera la primera serie
     });
 };
 
-// --- 3. AGREGAR SERIES (SIN CAMBIOS) ---
+// --- 3. FUNCIONES DE INTERFAZ (ESTADOS GRIS/VERDE) ---
 window.addSetField = (id) => {
     const container = document.getElementById(`sets-${id}`);
+    const setNum = container.children.length + 1;
     const row = document.createElement('div'); 
-    row.className = 'set-row';
-    row.innerHTML = `<input type="number" class="r" placeholder="Reps"><input type="number" class="w" placeholder="Kg">`;
+    row.className = 'set-row-pro';
+    row.innerHTML = `
+        <span class="set-num">${setNum}</span>
+        <input type="number" class="r" placeholder="Reps" oninput="window.checkSet(this)">
+        <span class="x-mark">×</span>
+        <input type="number" class="w" placeholder="Kg" oninput="window.checkSet(this)">
+        <div class="check-circle"></div>
+    `;
     container.appendChild(row);
 };
 
-// --- 4. FINALIZAR Y GUARDAR (MANUAL DATE - SIN CAMBIOS) ---
+window.checkSet = (input) => {
+    const row = input.parentElement;
+    const r = row.querySelector('.r').value;
+    const w = row.querySelector('.w').value;
+    if (r > 0 && w > 0) {
+        row.classList.add('set-completed');
+    } else {
+        row.classList.remove('set-completed');
+    }
+};
+
+window.finishExercise = (id) => {
+    const card = document.getElementById(`card-${id}`);
+    const badge = document.getElementById(`badge-${id}`);
+    const actions = document.getElementById(`actions-${id}`);
+    const sets = document.getElementById(`sets-${id}`);
+    
+    card.classList.add('card-finished');
+    badge.innerText = "✓ Completado";
+    badge.style.background = "#10b981";
+    actions.style.display = "none";
+    sets.style.display = "none"; // Colapsar series para ahorrar espacio
+};
+
+// --- 4. GUARDAR DATOS ---
 document.getElementById('btn-finish').onclick = async () => {
     const exercisesData = [];
     document.querySelectorAll('.exercise-card').forEach(card => {
@@ -134,7 +156,7 @@ document.getElementById('btn-finish').onclick = async () => {
     });
 
     if (exercisesData.length === 0) {
-        alert("Por favor, registra al menos una serie.");
+        alert("Registra al menos un ejercicio completo.");
         return;
     }
 
@@ -149,13 +171,10 @@ document.getElementById('btn-finish').onclick = async () => {
             duracion: document.getElementById('cronometro').innerText,
             ejercicios: exercisesData
         });
-
         clearInterval(timerInterval);
-        alert("¡Entrenamiento guardado!");
+        alert("¡Entrenamiento guardado con éxito!");
         window.location.href = 'home.html';
-        
     } catch (error) {
-        console.error("Error al guardar:", error);
-        alert("Error crítico al guardar.");
+        console.error("Error:", error);
     }
 };

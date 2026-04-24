@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GymFlow - Mi Perfil Pro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body class="profile-body">
+
+    <div class="profile-container">
+        <header class="profile-header">
+            <div class="banner-wrapper">
+                <img src="img/default-banner.jpg" id="banner-img" class="banner-img">
+                <label for="upload-banner" class="btn-edit-banner">📷 Cambiar Portada</label>
+                <input type="file" id="upload-banner" hidden accept="image/*">
+            </div>
+            
+            <div class="profile-info-main">
+                <div class="avatar-wrapper">
+                    <img src="img/default-avatar.png" id="profile-pic" class="profile-pic">
+                    <label for="upload-profile" class="btn-edit-avatar">➕</label>
+                    <input type="file" id="upload-profile" hidden accept="image/*">
+                </div>
+                <h2 class="user-name" id="user-display-name">Cargando...</h2>
+                <p class="user-tagline">"Sincronizado con la nube"</p>
+            </div>
+        </header>
+
+        <section class="content-section">
+            <div class="status-card-input">
+                <textarea placeholder="¿Cómo va el entrenamiento hoy?" id="user-note"></textarea>
+                <div class="status-footer">
+                    <button class="btn-primary-small" id="post-status">Publicar</button>
+                </div>
+            </div>
+            <div id="notes-container"></div>
+        </section>
+
+        <section class="content-section">
+            <div class="gallery-header">
+                <h3>Álbum de Progreso</h3>
+                <label for="upload-progress" class="btn-add-photo">+ Nueva Foto</label>
+                <input type="file" id="upload-progress" hidden accept="image/*">
+            </div>
+            <div class="photos-grid" id="photos-grid"></div>
+        </section>
+    </div>
+
+    <div class="bottom-nav">
+       <a href="home.html" class="nav-item">Inicio</a>
+       <a href="config.html" class="nav-item">Configurar</a>
+       <a href="train.html" class="nav-item">Entrenar</a>
+       <a href="progress.html" class="nav-item">Progreso</a>
+       <a href="gymreels.html" class="nav-item">GymReels</a>
+       <a href="profile.html" class="nav-item">Profile</a>
+   </div>
+
+    <script type="module" src="js/profile.js"></script>
+</body>
+</html>

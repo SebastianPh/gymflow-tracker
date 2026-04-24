@@ -5,7 +5,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+import { db, storage, auth } from "./firebase-config.js";
 // --- TUS CREDENCIALES REALES ---
 const firebaseConfig = {
   apiKey: "AIzaSyAQojED7cjdFpriz3ziEgaNFA_xjjner7E",

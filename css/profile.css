@@ -1,0 +1,58 @@
+.profile-body { background: #0b0f1a; margin: 0; padding-bottom: 90px; }
+
+/* Banner y Foto */
+.banner-wrapper { position: relative; height: 180px; width: 100%; background: #161b2c; }
+.banner-img { width: 100%; height: 100%; object-fit: cover; }
+
+.avatar-wrapper { 
+    width: 100px; height: 100px; margin: -50px auto 10px; 
+    position: relative; border: 4px solid #0b0f1a; border-radius: 50%;
+}
+.profile-pic { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #0f172a; }
+
+/* Estados en la nube */
+.status-card {
+    background: #161b2c; padding: 15px; border-radius: 12px;
+    margin-top: 15px; border-left: 4px solid #10b981;
+    animation: slideUp 0.4s ease-out;
+}
+.status-card p { color: #f1f5f9; margin: 0; font-size: 0.95rem; }
+.status-card small { color: #94a3b8; font-size: 0.75rem; margin-top: 8px; display: block; }
+
+/* Grid de fotos real */
+.photos-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px;
+}
+.photo-card {
+    background: #161b2c; border-radius: 12px; overflow: hidden;
+    border: 1px solid #334155; position: relative;
+}
+.photo-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around; /* Reparte el espacio equitativamente */
+    align-items: center;
+    background-color: #111; /* O el color que uses */
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.nav-item {
+    font-size: 10px; /* Tamaño pequeño para que quepan los 6 */
+    text-decoration: none;
+    color: #777;
+    text-align: center;
+}
+
+.nav-item.active {
+    color: #fff;
+    font-weight: bold;
+}

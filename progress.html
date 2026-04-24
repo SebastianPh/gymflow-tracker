@@ -6,9 +6,26 @@
     <title>GymFlow | Progreso</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <main class="container page-margin">
+        <h2 style="margin-bottom: 10px;">Análisis de Progreso</h2>
+        <div class="charts-container" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px;">
+            <div class="chart-card" style="background: #161b2c; padding: 15px; border-radius: 15px; border: 1px solid #334155;">
+                <h3 style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 10px;">Volumen Total de Carga (Fuerza)</h3>
+                <div style="height: 200px;"><canvas id="mainChart"></canvas></div>
+            </div>
+
+            <div class="chart-card" style="background: #161b2c; padding: 15px; border-radius: 15px; border: 1px solid #334155;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="font-size: 0.9rem; color: #94a3b8;">Progreso por Ejercicio</h3>
+                    <select id="exerciseSelector" style="background: #0f172a; color: #10b981; border: 1px solid #10b981; border-radius: 5px; font-size: 0.8rem;"></select>
+                </div>
+                <div style="height: 200px;"><canvas id="exerciseChart"></canvas></div>
+            </div>
+        </div>
+
         <h2>Historial de Progreso</h2>
         <div class="table-container">
             <table>
@@ -19,17 +36,20 @@
                         <th>Resumen (Ejer | R x Kg)</th>
                     </tr>
                 </thead>
-                <tbody id="progress-table-body">
-                    </tbody>
+                <tbody id="progress-table-body"></tbody>
             </table>
         </div>
     </main>
 
     <div class="bottom-nav">
-        <a href="home.html" class="nav-item">Inicio</a>
-        <a href="config.html" class="nav-item">Configurar</a>
-        <a href="train.html" class="nav-item">Entrenar</a>
-        <a href="progress.html" class="nav-item active">Progreso</a>
+       <a href="home.html" class="nav-item">Inicio</a>
+       <a href="config.html" class="nav-item">Configurar</a>
+       <a href="train.html" class="nav-item">Entrenar</a>
+       <a href="progress.html" class="nav-item">Progreso</a>
+       <a href="gymreels.html" class="nav-item">GymReels</a>
+       <a href="profile.html" class="nav-item">Profile</a>
+    </div>
+        
     </div>
     <script src="js/progress.js" type="module"></script>
 </body>
