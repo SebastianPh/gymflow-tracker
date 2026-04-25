@@ -11,7 +11,6 @@
     <header class="search-header">
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Buscar ejercicio o músculo...">
-            <span class="search-icon">🔍</span>
         </div>
     </header>
 
@@ -19,21 +18,20 @@
         </main>
 
     <div class="upload-section">
-        <label for="file-input" class="upload-btn" id="upload-label">
+        <label for="file-input" class="upload-btn">
             <span class="plus-icon">+</span>
         </label>
         <input type="file" id="file-input" accept="video/*" hidden>
     </div>
 
-    <div class="bottom-nav">
+    <nav class="bottom-nav">
         <a href="home.html" class="nav-item">Inicio</a>
-        <a href="config.html" class="nav-item">Configurar</a>
         <a href="train.html" class="nav-item">Entrenar</a>
-        <a href="progress.html" class="nav-item">Progreso</a>
         <a href="gymreels.html" class="nav-item active">GymReels</a>
-        <a href="profile.html" class="nav-item">Profile</a>
-    </div>
+        <a href="profile.html" class="nav-item">Perfil</a>
+    </nav>
 
+    <script type="module" src="js/firebase-config.js"></script>
     <script type="module" src="js/gymreels.js"></script>
 </body>
 </html>

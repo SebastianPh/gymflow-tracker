@@ -140,3 +140,68 @@ input {
     color: #fff;
     font-weight: bold;
 }
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    background: #ffffff;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.btn-google:hover {
+    background: #f1f1f1;
+}
+
+.btn-google img {
+    width: 18px;
+    height: 18px;
+}
+
+.hidden { display: none; }
+.btn-google-pro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Fondo oscuro sutil */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-google-pro:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #00ffa3; /* El color verde de GymFlow para el borde */
+    transform: translateY(-2px);
+}
+
+.google-icon-wrapper {
+    background: white;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.google-icon-wrapper img {
+    width: 18px;
+    height: 18px;
+}

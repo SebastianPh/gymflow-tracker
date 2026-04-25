@@ -14,19 +14,36 @@
                 <h1>Gym<span>Flow</span></h1>
                 <p>Domina tu disciplina</p>
             </div>
+
             <form id="auth-form">
                 <input type="email" id="email" placeholder="Correo electrónico" required>
                 <input type="password" id="password" placeholder="Contraseña" required>
+                
                 <div id="register-fields" class="hidden">
                     <input type="text" id="display-name" placeholder="Tu nombre">
                 </div>
+
                 <button type="submit" id="auth-submit-btn" class="btn-primary">Entrar</button>
             </form>
+
+            <div style="display: flex; align-items: center; margin: 20px 0; color: rgba(255,255,255,0.4); font-size: 0.8rem;">
+                <hr style="flex: 1; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+                <span style="padding: 0 10px;">O</span>
+                <hr style="flex: 1; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+            </div>
+
+          <button type="button" id="google-btn" class="btn-google-pro">
+    <div class="google-icon-wrapper">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+    </div>
+    <span>Continuar con Google</span>
+          </button>
             <div class="auth-footer">
                 <a href="#" id="toggle-auth">¿No tienes cuenta? Regístrate</a>
             </div>
         </section>
     </main>
+
     <script src="js/auth.js" type="module"></script>
 </body>
 </html>

@@ -7,76 +7,96 @@ const searchInput = document.getElementById('search-input');
 const fileInput = document.getElementById('file-input');
 
 let todosLosReels = [];
+let sonidoGlobalActivado = false;
 
-// Listener de Firestore (Lee tu colección biblioteca_rutinas)
-const q = query(collection(db, "biblioteca_rutinas"), orderBy("timestamp", "desc"));
-
-onSnapshot(q, (snapshot) => {
-    todosLosReels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    renderizarFeed(todosLosReels);
-});
+function cargarGymReels() {
+    const q = query(collection(db, "biblioteca_rutinas"), orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
+        todosLosReels = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderizarFeed(todosLosReels);
+    }, (error) => console.error("Error Firestore:", error));
+}
 
 function renderizarFeed(reels) {
+    if (!reelsContainer) return;
     if (reels.length === 0) {
-        reelsContainer.innerHTML = `<div style="color:white; text-align:center; padding-top:150px;">Cargando GymReels...</div>`;
+        reelsContainer.innerHTML = `<div style="color:white; text-align:center; padding-top:150px;">Cargando...</div>`;
         return;
     }
 
     reelsContainer.innerHTML = reels.map(reel => `
         <div class="reel-card">
-            <video src="${reel.videoURL}" loop muted autoplay playsinline onclick="this.paused ? this.play() : this.pause()"></video>
-            
+            <video class="reel-video" src="${reel.videoURL}" loop playsinline muted 
+                   onclick="window.togglePlayPause(this)"></video>
+            <button class="mute-btn" onclick="window.toggleMuteAll(event)">
+                <span class="mute-icon">${sonidoGlobalActivado ? "🔊" : "🔇"}</span>
+            </button>
             <div class="side-actions">
                 <div class="action-item"><span>❤️</span><small>1.2k</small></div>
                 <div class="action-item"><span>💬</span><small>45</small></div>
                 <div class="action-item"><span>🔖</span><small>Guardar</small></div>
                 <div class="action-item"><span>✈️</span><small>Enviar</small></div>
             </div>
-
             <div class="video-info">
-                <p>💪 ${reel.grupo || 'General'}</p>
+                <div class="tag-musculo">💪 ${reel.grupo || 'General'}</div>
                 <h2>${reel.nombre}</h2>
-                <small style="opacity:0.8;">${reel.tips || 'Sin tips adicionales'}</small>
+                <p>${reel.tips || ''}</p>
             </div>
         </div>
     `).join('');
+
+    configurarScrollAutoPlay();
 }
 
-// Subida de archivos corregida
+window.togglePlayPause = (video) => {
+    video.paused ? video.play().catch(() => {}) : video.pause();
+};
+
+window.toggleMuteAll = (event) => {
+    event.stopPropagation();
+    sonidoGlobalActivado = !sonidoGlobalActivado;
+    document.querySelectorAll('.reel-video').forEach(v => v.muted = !sonidoGlobalActivado);
+    document.querySelectorAll('.mute-icon').forEach(i => i.innerText = sonidoGlobalActivado ? "🔊" : "🔇");
+};
+
+function configurarScrollAutoPlay() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                video.play().catch(() => {}); 
+                video.muted = !sonidoGlobalActivado;
+            } else {
+                video.pause();
+            }
+        });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.reel-video').forEach(v => observer.observe(v));
+}
+
 fileInput.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    const nombre = prompt("Nombre del ejercicio (ej: Press Militar):");
-    const grupo = prompt("Músculo (ej: Hombro):");
-    const tips = prompt("Tips o consejos:");
-
+    const nombre = prompt("Nombre:");
+    const grupo = prompt("Músculo:");
     if (nombre && grupo) {
         try {
             const storageRef = ref(storage, `reels/${Date.now()}_${file.name}`);
-            const snapshot = await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(snapshot.ref);
-
+            const uploadTask = await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(uploadTask.ref);
             await addDoc(collection(db, "biblioteca_rutinas"), {
-                nombre,
-                grupo,
-                tips: tips || "",
-                videoURL: url,
-                timestamp: serverTimestamp()
+                nombre, grupo, videoURL: url, timestamp: serverTimestamp()
             });
-            alert("¡Ejercicio agregado a GymReels!");
-        } catch (error) {
-            console.error(error);
-            alert("Error al subir. Revisa las reglas de Storage.");
-        }
+            alert("Publicado");
+        } catch (err) { alert("Error"); }
     }
 });
 
-// Buscador funcional
-searchInput.addEventListener('input', (e) => {
-    const filtro = e.target.value.toLowerCase();
-    const filtrados = todosLosReels.filter(r => 
-        r.nombre.toLowerCase().includes(filtro) || (r.grupo && r.grupo.toLowerCase().includes(filtro))
-    );
-    renderizarFeed(filtrados);
-});
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        const f = e.target.value.toLowerCase();
+        renderizarFeed(todosLosReels.filter(r => r.nombre.toLowerCase().includes(f) || (r.grupo && r.grupo.toLowerCase().includes(f))));
+    });
+}
+
+cargarGymReels();
